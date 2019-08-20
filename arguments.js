@@ -37,5 +37,23 @@ function curriedSum(numArgs) {
   return _curriedSum;
 }
 
-const sum = curriedSum(4);
-sum(5)(30)(20)(1); // => 56
+Function.prototype.curry = function(numArgs) {
+  let args = [];
+  let _curry = (arg) => {
+    args.push(arg);
+    if (args.length === numArgs) {
+      return this(...args);
+    } else {
+      return _curry;
+    }
+  }
+  return _curry;
+};
+
+function addShit(...nums) {
+  return nums.reduce( (acc, el) => acc += el);
+}
+
+add3 = addShit.curry(3);
+add3(2)(3)(4);
+
